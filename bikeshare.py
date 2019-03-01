@@ -227,7 +227,7 @@ def load_data(month, day, file2load, month_data):
         # filter by day of week to create the new dataframe
         df = df.loc[df['day_of_week'] == day]
 
-    print('......Filtered Records  ' + str(len(df.index)) + '...Original File Length: ' + original_file_ln)
+    print('......Filtered Records: {} ... Original File Length: {}'.format(str(len(df.index)), original_file_ln))
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
