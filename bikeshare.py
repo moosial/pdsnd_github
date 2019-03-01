@@ -7,23 +7,48 @@ def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
 
-    Returns:
+    Returns:2
+    
         (str) city - name of the city to analyse
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter """
-    """ load the help xls for city, day and month descriptions """
-    print('......Loading paramters.xlsx (Sheets: cities, months and days).')
-    print('......Pls. make sure to have the xls in the same folder as the ')
-    print('......python script bikeshare_2.py! ')
-    try:
-        city_data   = pd.read_excel(io='parameters.xlsx', sheet_name='cities', converters={'city_key':str})
-        month_data = pd.read_excel(io='parameters.xlsx', sheet_name='months', converters={'month_key':str})
-        day_data = pd.read_excel(io='parameters.xlsx', sheet_name='days' , converters={'day_key':str})
-        
-    except Exception as er:
-        print(str(er)) 
-        sys.exit()
+#    """ load the help xls for city, day and month descriptions """
+#    print('......Loading paramters.xlsx (Sheets: cities, months and days).')
+#    print('......Pls. make sure to have the xls in the same folder as the ')
+#    print('......python script bikeshare_2.py! ')
+#    try:
+#        city_data   = pd.read_excel(io='parameters.xlsx', sheet_name='cities', converters={'city_key':str})
+#        month_data = pd.read_excel(io='parameters.xlsx', sheet_name='months', converters={'month_key':str})
+#        day_data = pd.read_excel(io='parameters.xlsx', sheet_name='days' , converters={'day_key':str})
+#        
+#    except Exception as er:
+#        print(str(er)) 
+#        sys.exit()
        
+    # Create th eparams manually
+    items = {'month_key'   :   pd.Series(data = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'], index = ['0', '1', '2', '3','4', '5', '6', '7', '8', '9', '10','11', '12']),
+             'month_short' :   pd.Series(data = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], index = ['0', '1', '2', '3','4', '5', '6', '7', '8', '9', '10','11', '12']),
+             'month_long'  :   pd.Series(data = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'Juli', 'August', 'September', 'October', 'November', 'December'], index = ['0', '1', '2', '3','4', '5', '6', '7', '8', '9', '10','11', '12'])}
+     
+    month_data = pd.DataFrame(items)
+         
+    # We create a dictionary of Pandas Series 
+    items = {'day_key'   :   pd.Series(data = ['0','1', '2', '3', '4', '5', '6', '7'], index = ['0', '1', '2', '3','4', '5', '6', '7']),
+             'day_short' :   pd.Series(data = ['All', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], index = ['0', '1', '2', '3','4', '5', '6', '7']),
+             'day_long'  :   pd.Series(data = ['All', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], index = ['0', '1', '2', '3','4', '5', '6', '7'])}
+    
+    day_data = pd.DataFrame(items)
+    
+    
+    items = {'city_key'   :   pd.Series(data = ['1','2', '3'], index = ['0', '1', '2']),
+             'city'       :   pd.Series(data = ['Chicago', 'Washington', 'New York City'], index = ['0', '1', '2']),
+             'city_lower' :   pd.Series(data = ['chicago', 'washington', 'new York City'], index = ['0', '1', '2']),
+             'file'       :   pd.Series(data = ['chicago.csv', 'washington.csv', 'new_york_city.csv'], index = ['0', '1', '2'])}
+    
+    city_data = pd.DataFrame(items)
+    
+
+
 
     
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
@@ -116,9 +141,9 @@ def get_filters():
        
                        
         for i in range(0, length, 1):
-            day_key   = day_data['day_key'].loc[i]
-            day_short = day_data['day_short'].loc[i] 
-            day_long  = day_data['day_long'].loc[i]    
+            day_key   = day_data['day_key'].loc[str(i)]
+            day_short = day_data['day_short'].loc[str(i)] 
+            day_long  = day_data['day_long'].loc[str(i)]    
             print('[{}]- {} -- {}'.format(day_key, day_short,day_long))
         
         day = input('......Your input:___ ').capitalize()
