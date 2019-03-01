@@ -93,7 +93,7 @@ def get_filters():
         length = len(month_data)
 
 
-        for i in range(0, length, 1):
+        for i in range(length):
             month_short = month_data['month_short'].iloc[(i)]
             month_long = month_data['month_long'].iloc[(i)]
             print('[{}]- {} -- {}'.format(i,month_short, month_long))
@@ -141,7 +141,7 @@ def get_filters():
         length = len(day_data)
 
 
-        for i in range(0, length, 1):
+        for i in range(length):
             day_key   = day_data['day_key'].loc[str(i)]
             day_short = day_data['day_short'].loc[str(i)]
             day_long  = day_data['day_long'].loc[str(i)]
@@ -228,7 +228,7 @@ def load_data(month, day, file2load, month_data):
         # filter by day of week to create the new dataframe
         df = df.loc[df['day_of_week'] == day]
 
-    print('......Filtered Records  ' + str(len(df.index)) + '...Original File Length: ' + original_file_ln)
+    print('......Filtered Records: {} ... Original File Length: {}'.format(str(len(df.index)), original_file_ln))
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
