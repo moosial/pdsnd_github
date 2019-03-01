@@ -92,7 +92,7 @@ def get_filters():
         length = len(month_data)
         
                
-        for i in range(0, length, 1):
+        for i in range(length):
             month_short = month_data['month_short'].iloc[(i)] 
             month_long = month_data['month_long'].iloc[(i)]    
             print('[{}]- {} -- {}'.format(i,month_short, month_long))
@@ -140,7 +140,7 @@ def get_filters():
         length = len(day_data)
        
                        
-        for i in range(0, length, 1):
+        for i in range(length):
             day_key   = day_data['day_key'].loc[str(i)]
             day_short = day_data['day_short'].loc[str(i)] 
             day_long  = day_data['day_long'].loc[str(i)]    
