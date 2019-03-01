@@ -7,7 +7,7 @@ Project and creation of README file was done on the __Feb 23, 2019__.
   * Chicago
   * Washington
   * New York City
-  
+
 
 * Functionality
   * Loading data based on user input
@@ -31,12 +31,15 @@ Project and creation of README file was done on the __Feb 23, 2019__.
 
 
 ### Files used
-* chicago.csv
-* new_york_city.csv
-* washington.csv
+City         | File            | Description
+-------------|-----------------|-------------------------------  
+Chicago      | chicago.csv     | 300000 records; 8 columns  
+New York City| new_york_city.csv | 300000 records; 8 columns
+Washington   | washington.csv | 300000 records, 6 columns
+
+
 
 ### Credits
 Resources used and referenced:
 * https://stackoverflow.com/questions/48590268/pandas-get-the-most-frequent-values-of-a-column
 * https://stackoverflow.com/questions/775049/how-do-i-convert-seconds-to-hours-minutes-and-seconds
-* ... :+1
