@@ -50,8 +50,6 @@ def get_filters():
 
 
 
-
-
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     while True :
         print('-'*40)
@@ -342,7 +340,7 @@ def user_stats(df):
     print('-'*40)
 
 def display_raw(df):
-   """Simply keep displaying five lines of the filtered data if the user want to. """"
+    """Simply keep displaying five lines of the filtered data if the user want to. """
 
     count=0;
     while True:
