@@ -8,7 +8,7 @@ def get_filters():
     Asks user to specify a city, month, and day to analyze.
 
     Returns:2
-    
+
         (str) city - name of the city to analyse
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter """
@@ -20,85 +20,86 @@ def get_filters():
 #        city_data   = pd.read_excel(io='parameters.xlsx', sheet_name='cities', converters={'city_key':str})
 #        month_data = pd.read_excel(io='parameters.xlsx', sheet_name='months', converters={'month_key':str})
 #        day_data = pd.read_excel(io='parameters.xlsx', sheet_name='days' , converters={'day_key':str})
-#        
+#
 #    except Exception as er:
-#        print(str(er)) 
+#        print(str(er))
 #        sys.exit()
-       
-    # Create th eparams manually
+
+    # Create the params manually
+    # table of months
     items = {'month_key'   :   pd.Series(data = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'], index = ['0', '1', '2', '3','4', '5', '6', '7', '8', '9', '10','11', '12']),
              'month_short' :   pd.Series(data = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], index = ['0', '1', '2', '3','4', '5', '6', '7', '8', '9', '10','11', '12']),
              'month_long'  :   pd.Series(data = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'Juli', 'August', 'September', 'October', 'November', 'December'], index = ['0', '1', '2', '3','4', '5', '6', '7', '8', '9', '10','11', '12'])}
-     
+
     month_data = pd.DataFrame(items)
-         
-    # We create a dictionary of Pandas Series 
+
+    # table of days
     items = {'day_key'   :   pd.Series(data = ['0','1', '2', '3', '4', '5', '6', '7'], index = ['0', '1', '2', '3','4', '5', '6', '7']),
              'day_short' :   pd.Series(data = ['All', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], index = ['0', '1', '2', '3','4', '5', '6', '7']),
              'day_long'  :   pd.Series(data = ['All', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], index = ['0', '1', '2', '3','4', '5', '6', '7'])}
-    
+
     day_data = pd.DataFrame(items)
-    
-    
+
+    # table of cities
     items = {'city_key'   :   pd.Series(data = ['1','2', '3'], index = ['0', '1', '2']),
              'city'       :   pd.Series(data = ['Chicago', 'Washington', 'New York City'], index = ['0', '1', '2']),
              'city_lower' :   pd.Series(data = ['chicago', 'washington', 'new York City'], index = ['0', '1', '2']),
              'file'       :   pd.Series(data = ['chicago.csv', 'washington.csv', 'new_york_city.csv'], index = ['0', '1', '2'])}
-    
+
     city_data = pd.DataFrame(items)
-    
 
 
 
-    
+
+
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     while True :
         print('-'*40)
         print('\n......Which city you like to analyze (enter Numbers or Cities)?')
         print('\n[1] - Chicago\n[2] - New York City\n[3] - Washington \n')
         city = input('......Your input:___ ').lower()
-        
-        try:   
+
+        try:
 
             if city in city_data.city_lower.values:
-                # now get the city name 
+                # now get the city name
                 city_data = city_data.set_index(['city_lower'],drop=False)
                 city = city_data['city'].loc[city]
                 print('-'*40)
                 break
-           
+
             elif city in city_data.city_key.values:
-                # now get the city name 
+                # now get the city name
                 city_data = city_data.set_index(['city_key'],drop=False)
                 city = city_data['city'].loc[city]
                 print('-'*40)
-                break 
-                
-            else: 
+                break
+
+            else:
                 print('......Wrong Input! Enter Numbers (1-3) or Cities!')
-            
+
         except Exception as er:
-            print(str(er)) 
+            print(str(er))
             sys.exit()
-            
+
     print('Your choice for city: {}. Thank you.'.format(city))
     city_data = city_data.set_index(['city'])
     file2load = city_data.file.loc[city]
 
-    # get user input for month (all, january, february, ... , june)
+    # get user input for month (all, january, february, ... , dec)
     while True:
         print('-'*40)
         print('\n......Which month you like to analyze (enter Numbers or Month)?')
         length = len(month_data)
-        
-               
+
+
         for i in range(0, length, 1):
-            month_short = month_data['month_short'].iloc[(i)] 
-            month_long = month_data['month_long'].iloc[(i)]    
+            month_short = month_data['month_short'].iloc[(i)]
+            month_long = month_data['month_long'].iloc[(i)]
             print('[{}]- {} -- {}'.format(i,month_short, month_long))
-        
+
         month = input('......Your input:___ ').capitalize()
-         
+
         try:
             if  month in month_data.month_key.values:
                 # now get the month name J
@@ -107,82 +108,82 @@ def get_filters():
                 print('-'*40)
                 break
 
-            
+
             elif month in month_data.month_short.values:
-                # now get the month name 
+                # now get the month name
                 month_data = month_data.set_index(['month_short'],drop=False)
                 month = month_data['month_long'].loc[month]
                 print('-'*40)
                 break
-             
+
             elif month in month_data.month_long.values:
                 # now get the month name (actually to set teh index and slect teh value throes an error)
                 month = month
                 print('-'*40)
                 break
-            
-            else: 
+
+            else:
                print('......Wrong Input! Enter Numbers (1-12) or Month short or long like Jan or January!')
-            
-              
+
+
         except Exception as er:
-            print(str(er)) 
-            sys.exit()  
-            
-            
+            print(str(er))
+            sys.exit()
+
+
     print('Your choice for month: {}. Thank you.'.format(month))
-    
+
 
     # get user input for day of week (all, monday, tuesday, ... sunday)
     while True:
         print('-'*40)
         print('\n......Which day you like to analyze (enter Number or Day)?')
         length = len(day_data)
-       
-                       
+
+
         for i in range(0, length, 1):
             day_key   = day_data['day_key'].loc[str(i)]
-            day_short = day_data['day_short'].loc[str(i)] 
-            day_long  = day_data['day_long'].loc[str(i)]    
+            day_short = day_data['day_short'].loc[str(i)]
+            day_long  = day_data['day_long'].loc[str(i)]
             print('[{}]- {} -- {}'.format(day_key, day_short,day_long))
-        
+
         day = input('......Your input:___ ').capitalize()
-           
-         
+
+
         try:
             if  day in day_data.day_key.values:
-                # now get the month name 
+                # now get the month name
                 day_data = day_data.set_index(['day_key'],drop=False)
                 day = day_data['day_long'].loc[day]
                 print('-'*40)
                 break
-            
-            elif day in day_data.day_short.values: 
-                # now get the month name 
+
+            elif day in day_data.day_short.values:
+                # now get the month name
                 day_data = day_data.set_index(['day_short'],drop=False)
                 day = day_data['day_long'].loc[day]
                 print('-'*40)
                 break
-             
+
             elif day in day_data.day_long.values:
-                # now get the month name (actually to set teh index and slect teh value throes an error)
+                # now get the month name (actually to set the index and select the value throw an error if input isn' valid)
                 day = day
                 print('-'*40)
                 break
-                
-            else: 
+
+            else:
                 print('......Wrong Input! Enter Numbers (1-12) or Month short or long like Jan or January!')
-             
+
         except Exception as er:
-            print(str(er)) 
-            sys.exit()     
+            print(str(er))
+            sys.exit()
 
     print('Your choice for day: {}. Thank you.'.format(day))
     print('-'*40)
-    
-    
+
+
     return city, month, day, file2load, month_data
-  
+
 
 def load_data(month, day, file2load, month_data):
     """
@@ -195,9 +196,9 @@ def load_data(month, day, file2load, month_data):
         (str) file2load - name of the city data file in teh same folder
         (df)  month definitions to get the index for access
     Returns:
-        df - Pandas DataFrame containing city data filtered by month and day
+        (df) - Pandas DataFrame containing city data filtered by month and day
     """
-    
+
     print('\n......Loading the requested data\n')
     start_time = time.time()
 
@@ -213,10 +214,10 @@ def load_data(month, day, file2load, month_data):
     if month != 'All':
         # extract month and day of week from Start Time to create new columns
         df['month'] = df['Start Time'].dt.month
-        
+
         month_data = month_data.set_index(['month_long'],drop=False)
         month_idx = int(month_data['month_key'].loc[month])
-        
+
         # filter by month to create the new dataframe
         df = df.loc[df['month'] == month_idx]
 
@@ -243,7 +244,7 @@ def time_stats(df):
     # Convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(arg = df['Start Time'], format = '%Y-%m-%d %H:%M:%S')
 
-   
+
     #display the most common month
     most_common_month = df['Start Time'].dt.month.mode()[0]
     print('......Most common month:        ', most_common_month)
@@ -255,19 +256,20 @@ def time_stats(df):
     #display the most common start hour
     common_start_hour = df['Start Time'].dt.hour.mode()[0]
     print('......Most frequent start hour:  ', common_start_hour)
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
 def station_stats(df):
-    
+
     """Displays statistics on the most popular stations and trip."""
+
     print('\n......Calculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
     # I searched help here:
     #https://stackoverflow.com/questions/48590268/pandas-get-the-most-frequent-values-of-a-column
-    
+
     start_time = time.time()
 
     #display most commonly used start station
@@ -286,15 +288,17 @@ def station_stats(df):
 
 
 def trip_duration_stats(df):
+
     """Displays statistics on the total and average trip duration."""
+
     # looked here for help: https://stackoverflow.com/questions/775049/how-do-i-convert-seconds-to-hours-minutes-and-seconds
     print('\n......Calculating Trip Duration...\n')
     start_time = time.time()
+
     # display total travel time
     total_travel_time = int(df['Trip Duration'].sum())
     total_travel_time  = datetime.timedelta(seconds=total_travel_time)
     print('......Total travel time: ' + str(total_travel_time))
-  
 
     #display mean travel time
     mean_travel_time = int(df['Trip Duration'].mean())
@@ -307,6 +311,7 @@ def trip_duration_stats(df):
 
 
 def user_stats(df):
+
     """Displays statistics on bikeshare users."""
 
     print('\n......Calculating User Stats...\n')
@@ -315,7 +320,7 @@ def user_stats(df):
     #Display counts of user types
     user_types = df['User Type'].value_counts()
     print('......Counts of user types: \n' +  user_types.to_string())
-    
+
     # washington doesn't has gnder and birthyear
     # so to avoid errors check for th epresence of the 2 columns
     # Display counts of gender
@@ -331,31 +336,28 @@ def user_stats(df):
         print("......Earliest year of birth:    " + str(earliest_birth_year))
         print("......Most recent year of birth: " + str(most_recent_birth_year))
         print("......Most common year of birth: " + str(common_birth_year))
-    
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 def display_raw(df):
-   #Simply keep displaying five lines of the filtzered data if the user wnat to. """"
-    
+   """Simply keep displaying five lines of the filtered data if the user want to. """"
+
     count=0;
     while True:
         display = input('\n......Would you like to view individual trip data belonging to your filter?\n'
                         '......Pls. type yes (y) or no (n). Your choice: ')
         if display.lower() in ('yes', 'no','y','n'):
             if display.lower() == 'yes' or display.lower() == 'y':
-                """ simply acces by a range which increases by 5 """                
+                """ simply acces by a range which increases by 5 """
                 print(df[count:count+5].to_string())
                 count +=5
             else:
                 print('......Display of the data ends!')
                 break
-        else:    
+        else:
             print('.....Enter a valid input provided in the options')
-
-
-
 
 
 def main():
@@ -370,9 +372,9 @@ def main():
             display_raw(df)
         else:
             print('......The filters applied to the data returned no results!')
-            
+
         restart = input('\n......Would you like to restart?\n......Pls. type yes (y) or no (n). Your choice: ')
-        
+
         if restart.lower() in ('yes', 'no','y','n'):
             if restart.lower() in ('yes', 'y'):
                 print('......Let\'s continue.')
